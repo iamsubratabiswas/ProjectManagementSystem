@@ -1,0 +1,188 @@
+@startuml
+title Project Management System - UML Class Diagram
+
+skinparam classAttributeIconSize 0
+
+enum Designation {
+    PROJECT_MANAGER
+    SOFTWARE_ENGINEER
+    TEST_ENGINEER
+    BUSINESS_ANALYST
+    DEVOPS_ENGINEER
+    MAINTENANCE_ENGINEER
+}
+
+enum ProjectStage {
+    REQUIREMENT
+    FEASIBILITY
+    TESTING
+    DEPLOYMENT
+    MAINTENANCE
+}
+
+class Employee {
+    - employeeId : int
+    - name : String
+    - designation : Designation
+    - skills : Set<String>
+    + Employee(employeeId, name, designation, skills)
+    + getEmployeeId() : int
+    + getName() : String
+    + getDesignation() : Designation
+    + getSkills() : Set<String>
+    + toString() : String
+}
+
+class Client {
+    - clientId : int
+    - name : String
+    - email : String
+    - projects : List<Project>
+    + Client(clientId, name, email)
+    + getClientId() : int
+    + getName() : String
+    + getEmail() : String
+    + getProjects() : List<Project>
+    ~ addProject(project : Project) : void
+    + toString() : String
+}
+
+abstract class Project {
+    - projectId : int
+    - name : String
+    - client : Client
+    - requirement : String
+    - startDate : LocalDate
+    - deadline : LocalDate
+    - billing : Billing
+    - assignments : List<Assignment>
+    - developmentRecords : List<DevelopmentRecord>
+    - feedbacks : List<ClientFeedback>
+    # Project(projectId, name, client, requirement, startDate, deadline, projectCost)
+    {abstract} + getProjectType() : String
+    + getProjectId() : int
+    + getName() : String
+    + getClient() : Client
+    + getRequirement() : String
+    + getStartDate() : LocalDate
+    + getDeadline() : LocalDate
+    + getBilling() : Billing
+    + getAssignments() : List<Assignment>
+    + getDevelopmentRecords() : List<DevelopmentRecord>
+    + getFeedbacks() : List<ClientFeedback>
+    + assignEmployee(employee : Employee, responsibility : String) : void
+    + updateDevelopment(stage : ProjectStage, status : String) : void
+    + addFeedback(stage : ProjectStage, comment : String, rating : int) : void
+    + toString() : String
+}
+
+class WebDevelopmentProject {
+    + WebDevelopmentProject(projectId, name, client, requirement, startDate, deadline, projectCost)
+    + getProjectType() : String
+}
+
+class MobileAppProject {
+    + MobileAppProject(projectId, name, client, requirement, startDate, deadline, projectCost)
+    + getProjectType() : String
+}
+
+class DataAnalyticsProject {
+    + DataAnalyticsProject(projectId, name, client, requirement, startDate, deadline, projectCost)
+    + getProjectType() : String
+}
+
+class MaintenanceProject {
+    + MaintenanceProject(projectId, name, client, requirement, startDate, deadline, projectCost)
+    + getProjectType() : String
+}
+
+class Assignment {
+    - employee : Employee
+    - project : Project
+    - responsibility : String
+    - assignedOn : LocalDate
+    + Assignment(employee, project, responsibility, assignedOn)
+    + getEmployee() : Employee
+    + getProject() : Project
+    + getResponsibility() : String
+    + getAssignedOn() : LocalDate
+    + toString() : String
+}
+
+class Billing {
+    - projectCost : double
+    - amountPaid : double
+    + Billing(projectCost : double)
+    + getProjectCost() : double
+    + getAmountPaid() : double
+    + getDueAmount() : double
+    + makePayment(amount : double) : void
+    + toString() : String
+}
+
+class DevelopmentRecord {
+    - stage : ProjectStage
+    - status : String
+    - updatedOn : LocalDate
+    + DevelopmentRecord(stage, status, updatedOn)
+    + getStage() : ProjectStage
+    + getStatus() : String
+    + getUpdatedOn() : LocalDate
+    + toString() : String
+}
+
+class ClientFeedback {
+    - stage : ProjectStage
+    - comment : String
+    - rating : int
+    - feedbackDate : LocalDate
+    + ClientFeedback(stage, comment, rating, feedbackDate)
+    + getStage() : ProjectStage
+    + getComment() : String
+    + getRating() : int
+    + getFeedbackDate() : LocalDate
+    + toString() : String
+}
+
+class ProjectManagementSystem {
+    - clients : List<Client>
+    - employees : List<Employee>
+    - projects : List<Project>
+    + addClient(client : Client) : void
+    + addEmployee(employee : Employee) : void
+    + addProject(project : Project) : void
+    + getClients() : List<Client>
+    + getEmployees() : List<Employee>
+    + getProjects() : List<Project>
+    + printProjectReport(project : Project) : void
+}
+
+class Main {
+    + main(args : String[]) : void
+}
+
+Project <|-- WebDevelopmentProject
+Project <|-- MobileAppProject
+Project <|-- DataAnalyticsProject
+Project <|-- MaintenanceProject
+
+Client "1" o-- "0..*" Project : owns
+Project "1" *-- "1" Billing : billing
+Project "1" *-- "0..*" Assignment : assignments
+Project "1" *-- "0..*" DevelopmentRecord : tracks
+Project "1" *-- "0..*" ClientFeedback : feedbacks
+
+Assignment "*" --> "1" Employee : employee
+Assignment "*" --> "1" Project : project
+
+Employee --> Designation : designation
+DevelopmentRecord --> ProjectStage : stage
+ClientFeedback --> ProjectStage : stage
+
+ProjectManagementSystem "1" o-- "0..*" Client : manages
+ProjectManagementSystem "1" o-- "0..*" Employee : manages
+ProjectManagementSystem "1" o-- "0..*" Project : manages
+
+Main ..> ProjectManagementSystem : uses
+
+@enduml
