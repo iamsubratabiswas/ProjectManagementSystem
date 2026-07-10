@@ -166,9 +166,27 @@ Process finished with exit code 0
 
 ### Project Report Output
 
-The following screenshot shows the generated project report containing employee assignments, the project development lifecycle, billing information, and client feedback.
+The following screenshots show the complete execution output of the Project Management System.
 
-![Project Report Output](docs/screenshots/project-output.png)
+### Output - Part 1
+
+![Project Output Part 1](docs/screenshots/project-output.png)
+
+![Project Output Part 1](docs/screenshots/project-output-1.png)
+
+### Output - Part 2
+
+![Project Output Part 2](docs/screenshots/project-output-2.png)
+
+### Output - Part 3
+
+![Project Output Part 3](docs/screenshots/project-output-3.png)
+
+### JUnit Test Result
+
+The following screenshot shows the successful execution of all unit test cases.
+
+![JUnit Test Result](docs/screenshots/test-result.png)
 
 ### JUnit Test Result
 
@@ -236,6 +254,6 @@ Class Roll: 002511002013
 
 ## Assignment
 
-M.E. UML Lab Assignment  
+M.E. Object Oriented System Lab Assignment  
 Project Management System  
 2026
