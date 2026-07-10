@@ -103,7 +103,10 @@ ProjectManagementSystem
 |-- docs
 |   |-- screenshots
 |   |   |-- project-output.png
-|   |   `-- test-result.png
+|   |   |-- project-output-1.png
+|   |   |-- project-output-2.png
+|   |   |-- project-output-3.png
+|   |   |-- test-result.png
 |   |
 |   |-- project-management-system.puml
 |   `-- project-management-system-uml.png
